@@ -1,6 +1,5 @@
 package com.wjh.demo.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.wjh.demo.dao.impl.TestDao;
 import com.wjh.demo.entity.User;
 import com.wjh.demo.service.IService;
@@ -46,28 +45,26 @@ public class TestService implements IService<User> {
     public boolean update(User updData) {
         long now = DateUtils.getCurrentTime();
         updData.setModifytime(now);
-        System.out.println(JSONObject.toJSONString(updData));
         int i = userDao.updateByPrimaryKeySelective(updData);
-        System.out.println(i);
         return i > 0;
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         User data = new User();
         data.setId(id);
         data.setStatus((byte) 0);
         return userDao.updateByPrimaryKeySelective(data) > 0;
     }
 
+    @Override
     public boolean isExist(User user) {
         Example exa = new Example(User.class);
         exa.createCriteria().andEqualTo(user);
-        User user1 = userDao.selectOneByExample(exa);
-        System.out.println(JSONObject.toJSONString(user1));
-        return user1 != null;
+        return userDao.selectOneByExample(exa) != null;
     }
 
+    @Override
     public boolean isExistExId(User user, int exId) {
         Example exa = new Example(User.class);
         exa.createCriteria().andNotEqualTo("id", exId).andEqualTo(user);

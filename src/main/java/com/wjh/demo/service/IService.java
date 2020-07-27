@@ -1,5 +1,8 @@
 package com.wjh.demo.service;
 
+import com.wjh.demo.entity.User;
+import tk.mybatis.mapper.entity.Example;
+
 import java.util.List;
 
 /**
@@ -15,5 +18,9 @@ public interface IService<T> {
 
     boolean update(T data);
 
-    boolean delete(int id);
+    boolean delete(Integer id);
+
+    boolean isExist(T data);
+
+    boolean isExistExId(T data, int exId);
 }
