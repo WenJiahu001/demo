@@ -1,5 +1,6 @@
 package com.wjh.demo.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -23,6 +24,7 @@ import static com.google.common.collect.Lists.newArrayList;
  **/
 @Configuration
 @EnableSwagger2
+@EnableKnife4j
 public class Swagger2 {
     @Bean
     public Docket createRestApi(Environment environment) {
