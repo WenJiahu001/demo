@@ -20,8 +20,9 @@ import java.util.List;
  * 账号表(UserMaster)表控制层
  *
  * @author wjh
- * @since 2020-07-28 16:02:40
+ * @since 2020-08-03 09:29:36
  */
+ 
 @Api(tags = "账号表接口")
 @RestController
 @RequestMapping("/userMaster")
@@ -34,26 +35,26 @@ public class UserMasterController {
 
     @GetMapping("getUserMasterDetail")
     @ApiOperation("获取账号表详情")
-    public UserMasterVO getDetail(Integer id) {
+    public UserMasterVO getUserMasterDetail(  Integer id) {
         return this.userMasterService.queryDetailById(id);
     }
     
     @GetMapping("/getUserMasterList")
     @ApiOperation("获取账号表列表")
-    public ResultVO<PageInfo<UserMasterVO>> getList(PageVO pageVO, UserMasterDTO dto) {
+    public ResultVO<PageInfo<UserMasterVO>> getUserMasterList(PageVO pageVO, UserMasterDTO dto) {
         PageHelper.startPage(pageVO.getPi(), pageVO.getPs());
         UserMaster data = new UserMaster();
         data.setName(dto.getName());
         data.setPwd(dto.getPwd());
 
-        List<UserMasterVO> userMasterList = userMasterService.queryAllDetail(data);
+        List<UserMasterVO> userMasterList = userMasterService.queryAllDetail(dto);
         PageInfo<UserMasterVO> pageInfo = new PageInfo<>(userMasterList);
         return ReturnUtils.success("", pageInfo);
     }
 
     @PostMapping("/addUserMaster")
     @ApiOperation("添加账号表")
-    public ResultVO add(@RequestBody UserMasterEDTO edto) {
+    public ResultVO addUserMaster(@RequestBody UserMasterEDTO edto) {
         UserMaster existData = new UserMaster();
         existData.setName(edto.getName());
         if (userMasterService.isExist(existData))
@@ -71,7 +72,7 @@ public class UserMasterController {
 
     @PostMapping("/modifyUserMaster")
     @ApiOperation("修改账号表")
-    public ResultVO modify(@RequestBody UserMasterEDTO edto) {
+    public ResultVO modifyUserMaster(@RequestBody UserMasterEDTO edto) {
         UserMaster existData = new UserMaster();
         existData.setName(edto.getName());
         if (userMasterService.isExistExId(existData, edto.getId()))

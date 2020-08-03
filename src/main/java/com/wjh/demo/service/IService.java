@@ -6,14 +6,14 @@ import java.util.List;
  * @author WJH
  * @date 2020/7/5
  */
-public interface IService<T,K> {
+public interface IService<T,K,D> {
     T queryById(Integer id);
 
     K queryDetailById(Integer id);
 
-    List<T> queryAll(T queryParam);
+    List<T> queryAll(T data);
 
-    List<K> queryAllDetail(T queryParam);
+    List<K> queryAllDetail(D dto);
 
     boolean insert(T data);
 
@@ -25,3 +25,4 @@ public interface IService<T,K> {
 
     boolean isExistExId(T data, int exId);
 }
+

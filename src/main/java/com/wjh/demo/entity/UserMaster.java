@@ -13,7 +13,7 @@ import javax.persistence.Id;
  * 账号表(UserMaster)实体类
  *
  * @author wjh
- * @since 2020-07-28 16:02:40
+ * @since 2020-08-03 09:29:36
  */
 @Data
 @ApiModel("账号表实体类")
@@ -38,5 +38,5 @@ public class UserMaster implements Serializable {
     @Column(name = "`status`")
     private Byte status;
 
-    private static final long serialVersionUID = 325930096206364902L;
+    private static final long serialVersionUID = 295053206816182726L;
 }

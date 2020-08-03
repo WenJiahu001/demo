@@ -3,6 +3,7 @@ package com.wjh.demo.service.impl;
 import com.wjh.demo.service.IService;
 import com.wjh.demo.entity.UserMaster;
 import com.wjh.demo.entity.vo.UserMasterVO;
+import com.wjh.demo.entity.dto.UserMasterDTO;
 import com.wjh.demo.dao.impl.UserMasterDao;
 import com.wjh.demo.utils.DateUtils;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,10 @@ import tk.mybatis.mapper.entity.Example;
  * 账号表(UserMaster)表Service实现类
  *
  * @author wjh
- * @since 2020-07-28 16:02:40
+ * @since 2020-08-03 09:29:36
  */
 @Service
-public class UserMasterService implements IService<UserMaster,UserMasterVO> {
+public class UserMasterService implements IService<UserMaster,UserMasterVO,UserMasterDTO> {
     @Autowired
     private UserMasterDao userMasterDao;
 
@@ -61,8 +62,8 @@ public class UserMasterService implements IService<UserMaster,UserMasterVO> {
      * @return 对象列表
      */
     @Override
-    public List<UserMasterVO> queryAllDetail(UserMaster userMaster) {
-        return this.userMasterDao.selectLi(userMaster);
+    public List<UserMasterVO> queryAllDetail(UserMasterDTO userMasterDTO) {
+        return this.userMasterDao.selectLi(userMasterDTO);
     }
     /**
      * 新增数据
@@ -75,7 +76,6 @@ public class UserMasterService implements IService<UserMaster,UserMasterVO> {
         long now = DateUtils.getCurrentTime();
         userMaster.setCreateTime(now);
         userMaster.setModifyTime(now);
-        userMaster.setStatus((byte) 1);
         return userMasterDao.insertSelective(userMaster) > 0;
     }
 
