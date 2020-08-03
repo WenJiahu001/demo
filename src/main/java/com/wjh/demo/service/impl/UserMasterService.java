@@ -15,7 +15,7 @@ import tk.mybatis.mapper.entity.Example;
  * 账号表(UserMaster)表Service实现类
  *
  * @author wjh
- * @since 2020-08-03 09:29:36
+ * @since 2020-08-03 16:22:45
  */
 @Service
 public class UserMasterService implements IService<UserMaster,UserMasterVO,UserMasterDTO> {

@@ -11,7 +11,7 @@ import java.util.List;
  * 账号表(UserMaster)表数据库访问层
  *
  * @author wjh
- * @since 2020-08-03 09:29:36
+ * @since 2020-08-03 16:22:44
  */
 public interface UserMasterDao extends MyMapper<UserMaster>{
 
