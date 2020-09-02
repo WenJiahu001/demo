@@ -13,19 +13,16 @@ import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 
 /**
  * 账号表(UserMaster)表控制层
  *
  * @author wjh
- * @since 2020-08-03 16:22:46
+ * @since 2020-08-31 14:48:37
  */
-
+ 
 @Api(tags = "账号表接口")
 @RestController
 @RequestMapping("/userMaster")
@@ -41,7 +38,7 @@ public class UserMasterController {
     public UserMasterVO getUserMasterDetail(Integer id) {
         return this.userMasterService.queryDetailById(id);
     }
-
+    
     @GetMapping("/getUserMasterList")
     @ApiOperation("获取账号表列表")
     public ResultVO<PageInfo<UserMasterVO>> getUserMasterList(PageVO pageVO, UserMasterDTO dto) {
@@ -57,16 +54,16 @@ public class UserMasterController {
 
     @PostMapping("/addUserMaster")
     @ApiOperation("添加账号表")
-    public ResultVO addUserMaster(@RequestBody @Valid UserMasterEDTO edto) {
+    public ResultVO addUserMaster(@RequestBody UserMasterEDTO edto) {
         UserMaster existData = new UserMaster();
         existData.setName(edto.getName());
         if (userMasterService.isExist(existData))
             return ReturnUtils.failed("已经存在同名【" + edto.getName() + "】无法添加");
-
+        
         UserMaster data = new UserMaster();
         data.setName(edto.getName());
         data.setPwd(edto.getPwd());
-
+        
         boolean b = userMasterService.insert(data);
         if (b) return ReturnUtils.success("添加成功");
         return ReturnUtils.failed("添加失败");
@@ -84,7 +81,7 @@ public class UserMasterController {
         data.setId(edto.getId());
         data.setName(edto.getName());
         data.setPwd(edto.getPwd());
-
+       
         boolean b = userMasterService.update(data);
         if (b) return ReturnUtils.success("修改成功");
         return ReturnUtils.failed("修改失败");

@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 账号表(UserMaster)查询专用实体类
  *
  * @author wjh
- * @since 2020-08-03 16:22:44
+ * @since 2020-08-31 14:48:37
  */
 @Data
 @ApiModel("账号表查询专用实体类")

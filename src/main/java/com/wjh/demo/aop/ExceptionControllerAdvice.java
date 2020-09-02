@@ -1,6 +1,7 @@
 package com.wjh.demo.aop;
 
 import com.wjh.demo.enums.ResultCodeEnum;
+import com.wjh.demo.exception.ServiceException;
 import com.wjh.demo.vo.ResultVO;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -17,6 +18,7 @@ public class ExceptionControllerAdvice {
 
     /**
      * 参数校检错误的异常监听
+     *
      * @param e
      * @return
      */
@@ -30,6 +32,7 @@ public class ExceptionControllerAdvice {
 
     /**
      * 请求方法不支持的异常提示
+     *
      * @param e
      * @return
      */
@@ -40,8 +43,8 @@ public class ExceptionControllerAdvice {
     }
 
 
-//    @ExceptionHandler(APIException.class)//抛砖引玉，如果报了自定义异常
-//    public String APIExceptionHandler(APIException e) {
-//        return e.getMsg();
-//    }
+    @ExceptionHandler(ServiceException.class)//抛砖引玉，如果报了自定义异常
+    public String APIExceptionHandler(ServiceException e) {
+        return e.getMsg();
+    }
 }

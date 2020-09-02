@@ -21,6 +21,8 @@ public interface IService<T,K,D> {
 
     boolean delete(Integer id);
 
+    boolean deleteTrue(Integer id);
+
     boolean isExist(T data);
 
     boolean isExistExId(T data, int exId);

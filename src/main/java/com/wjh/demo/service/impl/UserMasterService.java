@@ -1,5 +1,6 @@
 package com.wjh.demo.service.impl;
 
+import com.wjh.demo.exception.ServiceException;
 import com.wjh.demo.service.IService;
 import com.wjh.demo.entity.UserMaster;
 import com.wjh.demo.entity.vo.UserMasterVO;
@@ -15,7 +16,7 @@ import tk.mybatis.mapper.entity.Example;
  * 账号表(UserMaster)表Service实现类
  *
  * @author wjh
- * @since 2020-08-03 16:22:45
+ * @since 2020-08-31 14:48:37
  */
 @Service
 public class UserMasterService implements IService<UserMaster,UserMasterVO,UserMasterDTO> {
@@ -76,6 +77,9 @@ public class UserMasterService implements IService<UserMaster,UserMasterVO,UserM
         long now = DateUtils.getCurrentTime();
         userMaster.setCreateTime(now);
         userMaster.setModifyTime(now);
+        int i = userMasterDao.insertSelective(userMaster);
+        if(i==0) throw new ServiceException("账号表插入异常");
+            
         return userMasterDao.insertSelective(userMaster) > 0;
     }
 
@@ -90,11 +94,12 @@ public class UserMasterService implements IService<UserMaster,UserMasterVO,UserM
         long now = DateUtils.getCurrentTime();
         userMaster.setModifyTime(now);
         int i = userMasterDao.updateByPrimaryKeySelective(userMaster);
+        if(i==0) throw new ServiceException("账号表修改异常");
         return i > 0;
     }
 
     /**
-     * 通过主键删除数据
+     * 通过主键删除数据(假删除)
      *
      * @param id 主键
      * @return 是否成功
@@ -104,7 +109,24 @@ public class UserMasterService implements IService<UserMaster,UserMasterVO,UserM
         UserMaster userMaster = new UserMaster();
         userMaster.setId(id);
         userMaster.setStatus((byte) 0);
-        return userMasterDao.updateByPrimaryKeySelective(userMaster) > 0;
+        int i = userMasterDao.updateByPrimaryKeySelective(userMaster);
+        
+        if(i==0) throw new ServiceException("账号表删除异常");
+        
+        return i>0;
+    }
+    
+    /**
+     * 通过主键删除数据(真删除)
+     *
+     * @param id 主键
+     * @return 是否成功
+     */
+    @Override
+    public boolean deleteTrue(Integer id) {
+        int i = userMasterDao.deleteByPrimaryKey(id);
+        if(i==0) throw new ServiceException("账号表删除异常");
+        return i>0;
     }
     
     /**
@@ -115,6 +137,7 @@ public class UserMasterService implements IService<UserMaster,UserMasterVO,UserM
      */
     @Override
     public boolean isExist(UserMaster userMaster) {
+        userMaster.setStatus((byte) 1);
         Example exa = new Example(UserMaster.class);
         exa.createCriteria().andEqualTo(userMaster);
         return userMasterDao.selectOneByExample(exa) != null;
@@ -129,6 +152,7 @@ public class UserMasterService implements IService<UserMaster,UserMasterVO,UserM
      */
     @Override
     public boolean isExistExId(UserMaster userMaster, int exId) {
+        userMaster.setStatus((byte) 1);
         Example exa = new Example(UserMaster.class);
         exa.createCriteria().andNotEqualTo("id", exId).andEqualTo(userMaster);
         return userMasterDao.selectOneByExample(exa) != null;
